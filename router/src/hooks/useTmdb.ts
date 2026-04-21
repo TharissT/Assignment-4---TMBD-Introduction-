@@ -1,6 +1,6 @@
-import { API_KEY } from '../core/constants';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { API_KEY } from "../core/constants";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export function useTmdb<T>(url: string, params: Record<string, any>, deps: any[]) {
   const [data, setData] = useState<T | null>(null);
