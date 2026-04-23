@@ -7,10 +7,11 @@ type ButtonProps = {
   onClick: () => void;
 };
 
-const baseStyles = 'inline-block px-6 py-3 rounded-2xl transition font-medium shadow-lg';
+const baseStyles = 'inline-block px-12 py-4 rounded-full transition-all duration-300 font-black uppercase tracking-widest shadow-[0_0_20px_rgba(220,38,38,0.4)] active:scale-95';
+
 const variants = {
-  primary: 'bg-blue-600 hover:bg-blue-500 text-white',
-  grey: 'bg-gray-700 hover:bg-gray-600 text-white',
+  primary: 'bg-red-600 hover:bg-red-500 text-white hover:shadow-[0_0_40px_rgba(220,38,38,0.7)] border-t border-white/20',
+  grey: 'bg-zinc-800 hover:bg-zinc-700 text-zinc-400',
 };
 
 export const Button = ({ children, variant = 'primary', disabled = false, onClick }: ButtonProps) => {

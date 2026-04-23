@@ -25,7 +25,7 @@ export const SearchView = () => {
   }
 
   return (
-    <section className="max-w-[1200px] mx-auto p-10 space-y-5">
+    <section className="max-w-300 mx-auto p-10 space-y-5">
       <SearchBar value={query} onChange={setQuery} />
       <ImageGrid results={gridData} />
       {data.results.length ? (
