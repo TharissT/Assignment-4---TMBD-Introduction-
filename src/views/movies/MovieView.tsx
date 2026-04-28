@@ -11,8 +11,9 @@ export const MovieView = () => {
   const { data } = useTmdb<MovieRepsonse>(`${MOVIE_ENDPOINT}/${id}`, { append_to_response: 'videos' }, [id]);
 
   const trailerVideo =
-    data?.videos?.results.find((v) => v.site === 'YouTube' && v.type === 'Trailer' && v.name?.toLowerCase().includes('official')) ||
-    data?.videos?.results.find((v) => v.site === 'YouTube' && v.type === 'Trailer');
+    data?.videos?.results.find(
+      (v) => v.site === 'YouTube' && v.type === 'Trailer' && v.name?.toLowerCase().includes('official')
+    ) || data?.videos?.results.find((v) => v.site === 'YouTube' && v.type === 'Trailer');
 
   if (!data) {
     return <p className="text-center text-gray-400">Loading...</p>;
@@ -22,13 +23,17 @@ export const MovieView = () => {
     <Modal onClose={() => navigate(-1)}>
       <div className="p-6 space-y-6">
         <div
-          className="h-[420px] bg-cover bg-center rounded-2xl"
+          className="h-105 bg-cover bg-center rounded-2xl"
           style={{
             backgroundImage: `url(${ORIGINAL_IMAGE_BASE_URL}${data.backdrop_path})`,
           }}
         />
         <div className="flex gap-8">
-          <img className="w-[220px] h-[330px] object-cover rounded-xl" src={`${IMAGE_BASE_URL}${data.poster_path}`} alt={data.title} />
+          <img
+            className="w-55 h-82.5 object-cover rounded-xl"
+            src={`${IMAGE_BASE_URL}${data.poster_path}`}
+            alt={data.title}
+          />
           <div className="flex-1 space-y-4">
             <h1 className="text-3xl font-bold">{data.title}</h1>
             <p className="text-gray-400 flex items-center gap-2">

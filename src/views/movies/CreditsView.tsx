@@ -16,13 +16,17 @@ export const CreditsView = () => {
   }));
 
   if (!data) {
-    return <p className="text-center text-gray-400">Loading...</p>;
+    return <p className="text-center text-black-400">Loading...</p>;
   }
 
   return (
     <section className="px-2">
       <h2 className="text-2xl font-bold mb-6">Credits</h2>
-      {data.cast.length ? <ImageGrid results={gridData} /> : <p className="text-gray-400 text-center">No credits available.</p>}
+      {data.cast.length ? (
+        <ImageGrid results={gridData} />
+      ) : (
+        <p className="text-black-400 text-center">No credits available.</p>
+      )}
     </section>
   );
 };
