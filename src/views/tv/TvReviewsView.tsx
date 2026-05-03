@@ -1,14 +1,14 @@
 import { Loading, Pagination } from '@/components';
-import { MOVIE_ENDPOINT } from '@/core/constants';
+import { TV_ENDPOINT } from '@/core/constants';
 import type { ReviewsResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-export const ReviewsView = () => {
+export const TvReviewsView = () => {
   const { id } = useParams();
   const [page, setPage] = useState(1);
-  const { data, loading } = useTmdb<ReviewsResponse>(`${MOVIE_ENDPOINT}/${id}/reviews`, { page }, [id, page]);
+  const { data, loading } = useTmdb<ReviewsResponse>(`${TV_ENDPOINT}/${id}/reviews`, { page }, [id, page]);
 
   if (loading) return <Loading />;
   if (!data) return null;

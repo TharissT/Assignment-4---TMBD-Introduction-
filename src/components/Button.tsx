@@ -2,26 +2,22 @@ import type { ReactNode } from 'react';
 
 type ButtonProps = {
   children: ReactNode;
-  variant?: 'primary' | 'grey';
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'ghost';
   disabled?: boolean;
-  onClick: () => void;
+  className?: string;
 };
 
-const baseStyles = 'inline-block px-12 py-4 rounded-full transition-all duration-300 font-black uppercase tracking-widest shadow-[0_0_20px_rgba(220,38,38,0.4)] active:scale-95';
+export const Button = ({ children, onClick, variant = 'primary', disabled, className = '' }: ButtonProps) => {
+  const base = 'cursor-pointer transition-all duration-200 font-semibold uppercase tracking-wider text-sm disabled:opacity-40 disabled:cursor-not-allowed';
+  const variants = {
+    primary: 'bg-red-600 hover:bg-red-500 text-white px-6 py-2.5 rounded',
+    secondary: 'bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-2.5 rounded border border-zinc-700',
+    ghost: 'text-zinc-400 hover:text-white px-4 py-2',
+  };
 
-const variants = {
-  primary: 'bg-red-600 hover:bg-red-500 text-white hover:shadow-[0_0_40px_rgba(220,38,38,0.7)] border-t border-white/20',
-  grey: 'bg-zinc-800 hover:bg-zinc-700 text-zinc-400',
-};
-
-export const Button = ({ children, variant = 'primary', disabled = false, onClick }: ButtonProps) => {
   return (
-    <button
-      type="button"
-      className={`${baseStyles} ${disabled ? variants['grey'] : variants[variant]}`}
-      disabled={disabled}
-      onClick={onClick}
-    >
+    <button onClick={onClick} disabled={disabled} className={`${base} ${variants[variant]} ${className}`}>
       {children}
     </button>
   );

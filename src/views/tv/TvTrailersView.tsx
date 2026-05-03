@@ -1,12 +1,12 @@
 import { Loading } from '@/components';
-import { MOVIE_ENDPOINT } from '@/core/constants';
+import { TV_ENDPOINT } from '@/core/constants';
 import type { TrailersResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 import { useParams } from 'react-router-dom';
 
-export const TrailersView = () => {
+export const TvTrailersView = () => {
   const { id } = useParams();
-  const { data, loading } = useTmdb<TrailersResponse>(`${MOVIE_ENDPOINT}/${id}/videos`, {}, [id]);
+  const { data, loading } = useTmdb<TrailersResponse>(`${TV_ENDPOINT}/${id}/videos`, {}, [id]);
 
   if (loading) return <Loading />;
   if (!data) return null;

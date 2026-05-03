@@ -1,13 +1,13 @@
 import { ImageGrid, Loading } from '@/components';
-import { MOVIE_ENDPOINT } from '@/core/constants';
+import { TV_ENDPOINT } from '@/core/constants';
 import type { CreditsResponse } from '@/core/types';
 import { useTmdb } from '@/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export const CreditsView = () => {
+export const TvCreditsView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, loading } = useTmdb<CreditsResponse>(`${MOVIE_ENDPOINT}/${id}/credits`, {}, [id]);
+  const { data, loading } = useTmdb<CreditsResponse>(`${TV_ENDPOINT}/${id}/credits`, {}, [id]);
 
   if (loading) return <Loading />;
   if (!data) return null;

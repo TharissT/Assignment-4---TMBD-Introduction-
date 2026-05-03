@@ -2,32 +2,23 @@ import { API_KEY } from '@/core/constants';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export function useTmdb<T>(url: string, params: Record<string, any>, deps: any[]) {
+export const useTmdb = <T>(url: string, params: Record<string, unknown> = {}, deps: unknown[] = []) => {
   const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const controller = new AbortController();
+    if (!url) return;
+    setLoading(true);
+    setError(null);
 
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<T>(url, {
-          params: {
-            api_key: API_KEY,
-            ...params,
-          },
-          signal: controller.signal,
-        });
+    axios
+      .get<T>(url, { params: { api_key: API_KEY, ...params } })
+      .then((res) => setData(res.data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url, ...deps]);
 
-        setData(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
-
-    return () => controller.abort();
-  }, deps);
-
-  return { data };
-}
+  return { data, loading, error };
+};
