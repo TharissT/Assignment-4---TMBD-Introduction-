@@ -17,7 +17,7 @@ export const Header = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-900 bg-black/95 shadow-[0_2px_20px_rgba(0,0,0,0.8)] backdrop-blur">
       <nav className="mx-auto flex max-w-screen-2xl items-center gap-6 px-6 py-3">
-        <Link to="/" className="!border-none !text-2xl !font-black !tracking-tight !text-red-600">
+        <Link to="/" className="border-none! text-2xl! font-black! tracking-tight! text-red-600!">
           NETFLIX
         </Link>
 

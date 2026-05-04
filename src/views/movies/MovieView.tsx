@@ -26,7 +26,7 @@ export const MovieView = () => {
       {data.backdrop_path && (
         <div className="relative h-56 overflow-hidden">
           <img src={`${ORIGINAL_IMAGE_BASE_URL}${data.backdrop_path}`} alt={title} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
         </div>
       )}
 

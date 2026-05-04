@@ -6,11 +6,11 @@ export const HomeView = () => {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black text-white selection:bg-red-600/40">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.2)_0%,transparent_65%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,18,18,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(18,18,18,0.3)_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,18,18,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(18,18,18,0.3)_1px,transparent_1px)] bg-size-[40px_40px] mask-[radial-gradient(ellipse_at_center,black,transparent_80%)]" />
 
       <section className="relative z-10 w-full max-w-4xl space-y-16 px-6 text-center">
         <div className="group relative">
-          <h1 className="animate-pulse bg-gradient-to-b from-red-500 via-red-600 to-red-950 bg-clip-text text-[10rem] font-black italic uppercase tracking-tight text-transparent drop-shadow-[0_20px_50px_rgba(220,38,38,0.4)]">
+          <h1 className="animate-pulse bg-linear-to-b from-red-500 via-red-600 to-red-950 bg-clip-text text-[10rem] font-black italic uppercase tracking-tight text-transparent drop-shadow-[0_20px_50px_rgba(220,38,38,0.4)]">
             Netflix
           </h1>
           <div className="absolute -inset-4 rounded-full bg-red-600/5 blur-3xl transition-all duration-700 group-hover:bg-red-600/10" />
@@ -53,7 +53,7 @@ export const HomeView = () => {
         </div>
       </section>
 
-      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-gradient-to-t from-black to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-linear-to-t from-black to-transparent" />
     </main>
   )
 }
