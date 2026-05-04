@@ -17,7 +17,6 @@ export const useTmdb = <T>(url: string, params: Record<string, unknown> = {}, de
       .then((res) => setData(res.data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, ...deps])
 
   return { data, loading, error }
