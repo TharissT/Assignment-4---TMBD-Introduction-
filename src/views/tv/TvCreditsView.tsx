@@ -1,31 +1,31 @@
-import { ImageGrid, Loading } from '@/components';
-import { TV_ENDPOINT } from '@/core/constants';
-import type { CreditsResponse } from '@/core/types';
-import { useTmdb } from '@/hooks';
-import { useNavigate, useParams } from 'react-router-dom';
+import { ImageGrid, Loading } from '@/components'
+import { TV_ENDPOINT } from '@/core/constants'
+import type { CreditsResponse } from '@/core/types'
+import { useTmdb } from '@/hooks'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export const TvCreditsView = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { data, loading } = useTmdb<CreditsResponse>(`${TV_ENDPOINT}/${id}/credits`, {}, [id]);
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { data, loading } = useTmdb<CreditsResponse>(`${TV_ENDPOINT}/${id}/credits`, {}, [id])
 
-  if (loading) return <Loading />;
-  if (!data) return null;
+  if (loading) return <Loading />
+  if (!data) return null
 
   const gridData = data.cast.map((p) => ({
     id: p.id,
     imagePath: p.profile_path,
     primaryText: p.name,
     secondaryText: p.character,
-  }));
+  }))
 
   return (
     <section className="pb-6">
       {data.cast.length ? (
         <ImageGrid results={gridData} onClick={(personId) => navigate(`/person/${personId}`)} />
       ) : (
-        <p className="text-zinc-600 text-center py-10">No credits available.</p>
+        <p className="py-10 text-center text-zinc-600">No credits available.</p>
       )}
     </section>
-  );
-};
+  )
+}

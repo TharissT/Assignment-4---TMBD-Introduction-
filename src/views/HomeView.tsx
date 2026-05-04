@@ -1,45 +1,41 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 export const HomeView = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
-    <main className="min-h-screen bg-black text-white flex items-center justify-center relative overflow-hidden selection:bg-red-600/40">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.2)_0%,transparent_65%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,18,18,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(18,18,18,0.3)_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)] pointer-events-none" />
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black text-white selection:bg-red-600/40">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.2)_0%,transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,18,18,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(18,18,18,0.3)_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
 
-      <section className="relative z-10 max-w-4xl w-full text-center space-y-16 px-6">
-        {/* Logo */}
-        <div className="relative group">
-          <h1 className="text-[10rem] font-black uppercase tracking-tight italic text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-600 to-red-950 drop-shadow-[0_20px_50px_rgba(220,38,38,0.4)] animate-pulse">
+      <section className="relative z-10 w-full max-w-4xl space-y-16 px-6 text-center">
+        <div className="group relative">
+          <h1 className="animate-pulse bg-gradient-to-b from-red-500 via-red-600 to-red-950 bg-clip-text text-[10rem] font-black italic uppercase tracking-tight text-transparent drop-shadow-[0_20px_50px_rgba(220,38,38,0.4)]">
             Netflix
           </h1>
-          <div className="absolute -inset-4 bg-red-600/5 blur-3xl rounded-full group-hover:bg-red-600/10 transition-all duration-700" />
+          <div className="absolute -inset-4 rounded-full bg-red-600/5 blur-3xl transition-all duration-700 group-hover:bg-red-600/10" />
         </div>
 
-        <p className="text-zinc-500 text-xl font-extralight max-w-2xl mx-auto leading-relaxed tracking-widest uppercase">
+        <p className="mx-auto max-w-2xl text-xl font-extralight leading-relaxed tracking-widest text-zinc-500 uppercase">
           Explore movies and discover people using a{' '}
-          <strong className="text-red-600 font-black tracking-widest">fast, modern</strong> interface.
+          <strong className="font-black tracking-widest text-red-600">fast, modern</strong> interface.
         </p>
 
-        {/* CTA buttons */}
-        <div className="flex items-center justify-center gap-4 flex-wrap">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <button
             onClick={() => navigate('/movies')}
-            className="bg-red-600 text-white px-16 py-5 font-black uppercase tracking-[0.3em] shadow-[0_0_40px_rgba(220,38,38,0.3)] hover:shadow-[0_0_70px_rgba(220,38,38,0.6)] hover:bg-red-500 hover:scale-105 active:scale-95 transition-all duration-300 border border-red-500/30 cursor-pointer"
+            className="cursor-pointer border border-red-500/30 bg-red-600 px-16 py-5 font-black uppercase tracking-[0.3em] text-white shadow-[0_0_40px_rgba(220,38,38,0.3)] transition-all duration-300 hover:scale-105 hover:bg-red-500 hover:shadow-[0_0_70px_rgba(220,38,38,0.6)] active:scale-95"
           >
             Browse Movies
           </button>
           <button
             onClick={() => navigate('/television')}
-            className="bg-transparent text-white px-16 py-5 font-black uppercase tracking-[0.3em] border border-zinc-700 hover:border-red-600 hover:text-red-400 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+            className="cursor-pointer border border-zinc-700 bg-transparent px-16 py-5 font-black uppercase tracking-[0.3em] text-white transition-all duration-300 hover:scale-105 hover:border-red-600 hover:text-red-400 active:scale-95"
           >
             Browse TV
           </button>
         </div>
 
-        {/* Quick links */}
         <div className="flex justify-center gap-8 pt-4">
           {[
             { label: 'Trending', path: '/trending' },
@@ -49,7 +45,7 @@ export const HomeView = () => {
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
-              className="text-zinc-600 hover:text-red-500 text-xs uppercase tracking-widest font-bold transition-colors duration-200 cursor-pointer"
+              className="cursor-pointer text-xs font-bold uppercase tracking-widest text-zinc-600 transition-colors duration-200 hover:text-red-500"
             >
               {item.label}
             </button>
@@ -57,8 +53,7 @@ export const HomeView = () => {
         </div>
       </section>
 
-      {/* Edge vignette */}
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-40 w-full bg-gradient-to-t from-black to-transparent" />
     </main>
-  );
-};
+  )
+}

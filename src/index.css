@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   color-scheme: dark;
@@ -15,7 +15,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -30,13 +29,11 @@ body {
   background: #ef4444;
 }
 
-/* Selection */
 ::selection {
   background-color: rgba(220, 38, 38, 0.4);
   color: #fff;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
