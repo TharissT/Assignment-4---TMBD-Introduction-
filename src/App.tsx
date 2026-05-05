@@ -1,4 +1,5 @@
-import { MainLayout } from '@/layouts/MainLayout'
+import { MainLayout } from '@/layouts/MainLayout';
+import { Route, Routes } from 'react-router-dom';
 import {
   CareerView,
   CreditsView,
@@ -20,8 +21,7 @@ import {
   TvReviewsView,
   TvTrailersView,
   TvView,
-} from '@/views'
-import { Route, Routes } from 'react-router-dom'
+} from '@/views';
 
 export const App = () => {
   return (
@@ -57,5 +57,5 @@ export const App = () => {
 
       <Route path="*" element={<ErrorView />} />
     </Routes>
-  )
-}
+  );
+};
