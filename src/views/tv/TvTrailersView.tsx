@@ -8,20 +8,20 @@ export const TvTrailersView = () => {
   const { id } = useParams()
   const { data, loading } = useTmdb<TrailersResponse>(`${TV_ENDPOINT}/${id}/videos`, {}, [id])
 
-  if (loading) return <Loading />
-  if (!data) return null
+  if (loading) { return <Loading /> }
+  if (!data) { return null }
 
   const trailers = data.results.filter((v) => v.site === 'YouTube' && v.type === 'Trailer')
   const others = data.results.filter((v) => v.site === 'YouTube' && v.type !== 'Trailer')
   const all = [...trailers, ...others]
 
   return (
-    <section className="space-y-4 pb-6">
+    <div className="py-4">
       {all.length ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           {all.map((video) => (
-            <div key={video.id} className="space-y-2">
-              <div className="aspect-video overflow-hidden rounded border border-zinc-800">
+            <div key={video.id} className="overflow-hidden rounded border border-zinc-800">
+              <div className="aspect-video">
                 <iframe
                   className="h-full w-full"
                   src={`https://www.youtube.com/embed/${video.key}`}
@@ -29,7 +29,7 @@ export const TvTrailersView = () => {
                   allowFullScreen
                 />
               </div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+              <p className="p-2 text-xs text-zinc-500">
                 {video.type} · {video.name}
               </p>
             </div>
@@ -38,6 +38,6 @@ export const TvTrailersView = () => {
       ) : (
         <p className="py-10 text-center text-zinc-600">No trailers available.</p>
       )}
-    </section>
+    </div>
   )
 }

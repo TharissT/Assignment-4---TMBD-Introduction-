@@ -10,29 +10,31 @@ export const ReviewsView = () => {
   const [page, setPage] = useState(1)
   const { data, loading } = useTmdb<ReviewsResponse>(`${MOVIE_ENDPOINT}/${id}/reviews`, { page }, [id, page])
 
-  if (loading) return <Loading />
-  if (!data) return null
+  if (loading) { return <Loading /> }
+  if (!data) { return null }
 
   return (
-    <section className="space-y-4 pb-6">
+    <div className="py-4 space-y-4">
       {data.results.length ? (
         <>
-          {data.results.map((review) => (
-            <div key={review.id} className="space-y-2 rounded border border-zinc-800 bg-zinc-900 p-4">
-              <div className="flex items-center justify-between">
-                <p className="font-bold text-white">{review.author}</p>
-                <p className="text-xs text-zinc-600">
-                  {review.created_at ? new Date(review.created_at).toLocaleDateString() : ''}
-                </p>
+          <div className="space-y-4">
+            {data.results.map((review) => (
+              <div key={review.id} className="rounded border border-zinc-800 bg-zinc-900 p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-bold text-white">{review.author}</p>
+                  <p className="text-xs text-zinc-600">
+                    {review.created_at ? new Date(review.created_at).toLocaleDateString() : ''}
+                  </p>
+                </div>
+                <p className="text-sm leading-relaxed text-zinc-400 line-clamp-4">{review.content}</p>
               </div>
-              <p className="line-clamp-5 text-sm leading-relaxed text-zinc-400">{review.content}</p>
-            </div>
-          ))}
+            ))}
+          </div>
           <Pagination page={page} maxPages={data.total_pages} onClick={setPage} />
         </>
       ) : (
         <p className="py-10 text-center text-zinc-600">No reviews available.</p>
       )}
-    </section>
+    </div>
   )
 }

@@ -8,15 +8,25 @@ export const useTmdb = <T>(url: string, params: Record<string, unknown> = {}, de
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!url) return
+    if (!url) {
+      setLoading(false)
+      return
+    }
+
     setLoading(true)
     setError(null)
-
     axios
       .get<T>(url, { params: { api_key: API_KEY, ...params } })
-      .then((res) => setData(res.data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
+      .then((res) => {
+        setData(res.data)
+      })
+      .catch((err) => {
+        setError(err.message)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, ...deps])
 
   return { data, loading, error }

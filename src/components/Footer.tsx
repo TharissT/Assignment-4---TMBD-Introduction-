@@ -2,13 +2,10 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 export const Footer = () => {
   return (
-    <footer className="mt-16 border-t border-zinc-900 bg-black px-6 py-10">
-      <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-4 md:flex-row">
-        <div>
-          <p className="text-xl font-black uppercase tracking-widest text-red-600">Netflix</p>
-          <p className="mt-1 text-xs uppercase tracking-widest text-zinc-600">Powered by TMDB API</p>
-        </div>
-
+    <footer className="border-t border-zinc-800 bg-zinc-950 px-8 py-6">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 md:flex-row md:justify-between">
+        <span className="text-sm font-black uppercase tracking-widest text-red-600">Netflix</span>
+        <p className="text-xs text-zinc-600">Powered by TMDB API</p>
         <div className="flex items-center gap-6">
           <a
             href="https://github.com/TharissT"
@@ -29,8 +26,9 @@ export const Footer = () => {
             LinkedIn
           </a>
         </div>
-
-        <p className="text-xs uppercase tracking-widest text-zinc-800">© {new Date().getFullYear()} · Built with React & Vite</p>
+        <p className="text-xs uppercase tracking-widest text-zinc-800">
+          {`© ${new Date().getFullYear()} · Built with React & Vite`}
+        </p>
       </div>
     </footer>
   )

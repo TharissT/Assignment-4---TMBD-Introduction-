@@ -7,10 +7,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 export const CareerView = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { data, loading } = useTmdb<PersonCreditsResponse>(`${PERSON_ENDPOINT}/${id}/combined_credits`, {}, [id])
+  const { data, loading } = useTmdb<PersonCreditsResponse>(
+    `${PERSON_ENDPOINT}/${id}/combined_credits`,
+    {},
+    [id],
+  )
 
-  if (loading) return <Loading />
-  if (!data) return null
+  if (loading) { return <Loading /> }
+  if (!data) { return null }
 
   const seen = new Set<number>()
   const sorted = [...data.cast]
@@ -20,7 +24,7 @@ export const CareerView = () => {
       return bDate.localeCompare(aDate)
     })
     .filter((item) => {
-      if (seen.has(item.id)) return false
+      if (seen.has(item.id)) { return false }
       seen.add(item.id)
       return true
     })
@@ -33,22 +37,23 @@ export const CareerView = () => {
   }))
 
   return (
-    <section className="space-y-4">
-      <p className="text-sm text-zinc-500">
-        <span className="font-bold text-white">{sorted.length}</span> credits
-      </p>
+    <div className="space-y-4">
+      <p className="text-xs font-bold uppercase tracking-wider text-zinc-600">{sorted.length} credits</p>
       {gridData.length ? (
         <ImageGrid
           results={gridData}
           onClick={(itemId) => {
             const item = data.cast.find((c) => c.id === itemId)
-            if (item?.media_type === 'tv') navigate(`/tv/${itemId}`)
-            else navigate(`/movie/${itemId}`)
+            if (item?.media_type === 'tv') {
+              navigate(`/tv/${itemId}`)
+            } else {
+              navigate(`/movie/${itemId}`)
+            }
           }}
         />
       ) : (
         <p className="py-10 text-center text-zinc-600">No career credits found.</p>
       )}
-    </section>
+    </div>
   )
 }

@@ -1,53 +1,55 @@
 import { ButtonGroup, ImageGrid, Loading, Pagination, SectionHeader } from '@/components'
-import { TV_AIRING_TODAY, TV_ON_THE_AIR, TV_POPULAR, TV_TOP_RATED } from '@/core/constants'
+import { TV_CATEGORIES, TV_ENDPOINT } from '@/core/constants'
 import type { MoviesResponse } from '@/core/types'
 import { useTmdb } from '@/hooks'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-const CATEGORIES = [
-  { label: 'Airing Today', value: 'airing_today', endpoint: TV_AIRING_TODAY },
-  { label: 'On The Air', value: 'on_the_air', endpoint: TV_ON_THE_AIR },
-  { label: 'Popular', value: 'popular', endpoint: TV_POPULAR },
-  { label: 'Top Rated', value: 'top_rated', endpoint: TV_TOP_RATED },
-]
+import { useNavigate, useParams } from 'react-router-dom'
 
 export const TelevisionView = () => {
   const navigate = useNavigate()
-  const [category, setCategory] = useState(CATEGORIES[0].value)
+  const { category = 'airing_today' } = useParams()
   const [page, setPage] = useState(1)
 
-  const active = CATEGORIES.find((c) => c.value === category)!
-  const { data, loading } = useTmdb<MoviesResponse>(active.endpoint, { page }, [page, category])
+  const { data, loading } = useTmdb<MoviesResponse>(
+    `${TV_ENDPOINT}/${category}`,
+    { page },
+    [page, category],
+  )
 
   const gridData = (data?.results ?? []).map((r) => ({
     id: r.id,
     imagePath: r.poster_path,
-    primaryText: r.name ?? r.original_title ?? '',
+    primaryText: r.name ?? r.original_title ?? r.title ?? '',
   }))
 
   const handleCategoryChange = (val: string) => {
-    setCategory(val)
+    navigate(`/television/${val}`)
     setPage(1)
   }
 
+  const label = TV_CATEGORIES.find((c) => c.value === category)?.label ?? category
+
   return (
-    <section className="space-y-6">
-      <SectionHeader title="TV Shows">
+    <section className="mx-auto max-w-7xl space-y-6 px-6 py-8">
+      <SectionHeader title={label}>
         <ButtonGroup
           value={category}
-          options={CATEGORIES.map((c) => ({ label: c.label, value: c.value }))}
+          options={TV_CATEGORIES}
           onClick={handleCategoryChange}
         />
       </SectionHeader>
-
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <ImageGrid results={gridData} onClick={(id) => navigate(`/tv/${id}`)} />
+        <div className="space-y-6">
+          <ImageGrid
+            results={gridData}
+            onClick={(id) => {
+              navigate(`/tv/${id}`)
+            }}
+          />
           <Pagination page={page} maxPages={data?.total_pages ?? 1} onClick={setPage} />
-        </>
+        </div>
       )}
     </section>
   )

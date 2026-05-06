@@ -9,8 +9,8 @@ export const TvCreditsView = () => {
   const navigate = useNavigate()
   const { data, loading } = useTmdb<CreditsResponse>(`${TV_ENDPOINT}/${id}/credits`, {}, [id])
 
-  if (loading) return <Loading />
-  if (!data) return null
+  if (loading) { return <Loading /> }
+  if (!data) { return null }
 
   const gridData = data.cast.map((p) => ({
     id: p.id,
@@ -20,12 +20,17 @@ export const TvCreditsView = () => {
   }))
 
   return (
-    <section className="pb-6">
+    <div className="py-4">
       {data.cast.length ? (
-        <ImageGrid results={gridData} onClick={(personId) => navigate(`/person/${personId}`)} />
+        <ImageGrid
+          results={gridData}
+          onClick={(personId) => {
+            navigate(`/person/${personId}`)
+          }}
+        />
       ) : (
         <p className="py-10 text-center text-zinc-600">No credits available.</p>
       )}
-    </section>
+    </div>
   )
 }

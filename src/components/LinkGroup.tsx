@@ -6,9 +6,9 @@ type LinkGroupProps = {
 
 export const LinkGroup = ({ links }: LinkGroupProps) => {
   return (
-    <div className="mb-6 flex gap-1 border-b border-zinc-800">
+    <div className="flex gap-4 border-b border-zinc-800 pb-2 pt-4">
       {links.map((link) => (
-        <Link key={link.to} to={link.to} className="mr-4 pb-3">
+        <Link key={link.to} to={link.to}>
           {link.label}
         </Link>
       ))}

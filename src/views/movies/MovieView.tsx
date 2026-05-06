@@ -2,6 +2,7 @@ import { LinkGroup, Loading, Modal } from '@/components'
 import { IMAGE_BASE_URL, MOVIE_ENDPOINT, ORIGINAL_IMAGE_BASE_URL } from '@/core/constants'
 import type { MovieRepsonse } from '@/core/types'
 import { useTmdb } from '@/hooks'
+import { FiStar } from 'react-icons/fi'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 export const MovieView = () => {
@@ -9,27 +10,32 @@ export const MovieView = () => {
   const navigate = useNavigate()
   const { data, loading } = useTmdb<MovieRepsonse>(`${MOVIE_ENDPOINT}/${id}`, {}, [id])
 
-  if (loading)
+  if (loading) {
     return (
-      <Modal onClose={() => navigate(-1)}>
+      <Modal onClose={() => { navigate(-1) }}>
         <Loading />
       </Modal>
     )
-  if (!data) return null
+  }
+
+  if (!data) { return null }
 
   const title = data.title ?? data.name ?? 'Unknown'
   const year = data.release_date ? new Date(data.release_date).getFullYear() : ''
   const score = typeof data.vote_average === 'number' ? data.vote_average.toFixed(1) : '—'
 
   return (
-    <Modal onClose={() => navigate(-1)}>
+    <Modal onClose={() => { navigate(-1) }}>
       {data.backdrop_path && (
-        <div className="relative h-56 overflow-hidden">
-          <img src={`${ORIGINAL_IMAGE_BASE_URL}${data.backdrop_path}`} alt={title} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
+        <div className="relative h-64 w-full overflow-hidden">
+          <img
+            src={`${ORIGINAL_IMAGE_BASE_URL}${data.backdrop_path}`}
+            alt={title}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
         </div>
       )}
-
       <div className="relative -mt-20 flex gap-6 p-6">
         {data.poster_path && (
           <img
@@ -42,12 +48,14 @@ export const MovieView = () => {
           <h2 className="text-3xl font-black text-white">{title}</h2>
           <div className="flex items-center gap-4 text-sm text-zinc-400">
             {year && <span>{year}</span>}
-            <span className="flex items-center gap-1 font-bold text-yellow-400">⭐ {score}</span>
+            <span className="flex items-center gap-1 font-bold text-yellow-400">
+              <FiStar size={14} />
+              {score}
+            </span>
           </div>
           <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">{data.overview}</p>
         </div>
       </div>
-
       <div className="px-6">
         <LinkGroup
           links={[

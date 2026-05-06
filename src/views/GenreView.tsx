@@ -3,7 +3,7 @@ import { DISCOVER_MOVIE_ENDPOINT, DISCOVER_TV_ENDPOINT, MOVIE_GENRES, TV_GENRES 
 import type { MoviesResponse } from '@/core/types'
 import { useTmdb } from '@/hooks'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const MEDIA_TYPES = [
   { label: 'Movies', value: 'movie' },
@@ -12,18 +12,21 @@ const MEDIA_TYPES = [
 
 export const GenreView = () => {
   const navigate = useNavigate()
-  const [mediaType, setMediaType] = useState<'movie' | 'tv'>('movie')
+  const { mediaType: paramMedia, genre: paramGenre } = useParams<{ mediaType?: string; genre?: string }>()
+
+  const mediaType = (paramMedia === 'tv' ? 'tv' : 'movie') as 'movie' | 'tv'
+  const genres = mediaType === 'movie' ? MOVIE_GENRES : TV_GENRES
+  const selectedGenre = paramGenre ?? genres[0].value
+
   const [page, setPage] = useState(1)
 
-  const genres = mediaType === 'movie' ? MOVIE_GENRES : TV_GENRES
-  const [selectedGenre, setSelectedGenre] = useState(genres[0].value)
-
   const endpoint = mediaType === 'movie' ? DISCOVER_MOVIE_ENDPOINT : DISCOVER_TV_ENDPOINT
-  const { data, loading } = useTmdb<MoviesResponse>(endpoint, { with_genres: selectedGenre, page }, [
-    selectedGenre,
-    page,
-    mediaType,
-  ])
+
+  const { data, loading } = useTmdb<MoviesResponse>(
+    endpoint,
+    { with_genres: selectedGenre, page },
+    [selectedGenre, page, mediaType],
+  )
 
   const gridData = (data?.results ?? []).map((r) => ({
     id: r.id,
@@ -32,28 +35,30 @@ export const GenreView = () => {
   }))
 
   const handleMediaChange = (val: string) => {
-    setMediaType(val as 'movie' | 'tv')
     const newGenres = val === 'movie' ? MOVIE_GENRES : TV_GENRES
-    setSelectedGenre(newGenres[0].value)
+    navigate(`/genre/${val}/${newGenres[0].value}`)
     setPage(1)
   }
 
   const handleGenreChange = (val: string) => {
-    setSelectedGenre(val)
+    navigate(`/genre/${mediaType}/${val}`)
     setPage(1)
   }
 
+  const genreLabel = genres.find((g) => g.value === selectedGenre)?.label ?? selectedGenre
+
   return (
-    <section className="space-y-6">
-      <SectionHeader title="Browse by Genre">
+    <section className="mx-auto max-w-7xl space-y-6 px-6 py-8">
+      <SectionHeader title={genreLabel}>
         <ButtonGroup value={mediaType} options={MEDIA_TYPES} onClick={handleMediaChange} />
       </SectionHeader>
-
       <div className="flex flex-wrap gap-2">
         {genres.map((g) => (
           <button
             key={g.value}
-            onClick={() => handleGenreChange(g.value)}
+            onClick={() => {
+              handleGenreChange(g.value)
+            }}
             className={`cursor-pointer rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
               selectedGenre === g.value
                 ? 'border-red-600 bg-red-600 text-white'
@@ -64,17 +69,22 @@ export const GenreView = () => {
           </button>
         ))}
       </div>
-
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <div className="space-y-6">
           <ImageGrid
             results={gridData}
-            onClick={(id) => navigate(mediaType === 'tv' ? `/tv/${id}` : `/movie/${id}`)}
+            onClick={(id) => {
+              if (mediaType === 'tv') {
+                navigate(`/tv/${id}`)
+              } else {
+                navigate(`/movie/${id}`)
+              }
+            }}
           />
           <Pagination page={page} maxPages={data?.total_pages ?? 1} onClick={setPage} />
-        </>
+        </div>
       )}
     </section>
   )

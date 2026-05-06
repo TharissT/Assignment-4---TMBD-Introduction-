@@ -1,10 +1,12 @@
 import { ButtonGroup, ImageGrid, Loading, Pagination, SectionHeader } from '@/components'
-import type { MoviesResponse } from '@/core/types'
+import { TRENDING_ENDPOINT } from '@/core/constants'
+import type { TrendingResponse } from '@/core/types'
 import { useTmdb } from '@/hooks'
 import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { FiFilm, FiTv } from 'react-icons/fi'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-const MEDIA = [
+const MEDIA_TYPES = [
   { label: 'Movies', value: 'movie' },
   { label: 'TV Shows', value: 'tv' },
 ]
@@ -16,48 +18,60 @@ const INTERVALS = [
 
 export const TrendingView = () => {
   const navigate = useNavigate()
-  const [page, setPage] = useState(1)
+  const { mediaType = 'movie' } = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
-  const interval = searchParams.get('interval') || 'day'
-  const media = searchParams.get('media') || 'movie'
+  const interval = searchParams.get('interval') ?? 'day'
+  const [page, setPage] = useState(1)
 
-  const { data, loading } = useTmdb<MoviesResponse>(
-    `https://api.themoviedb.org/3/trending/${media}/${interval}`,
+  const { data, loading } = useTmdb<TrendingResponse>(
+    `${TRENDING_ENDPOINT}/${mediaType}/${interval}`,
     { page },
-    [page, interval, media],
+    [mediaType, interval, page],
   )
 
   const gridData = (data?.results ?? []).map((r) => ({
     id: r.id,
     imagePath: r.poster_path,
-    primaryText: r.original_title ?? r.name ?? r.title ?? '',
+    primaryText: r.title ?? r.name ?? r.original_title ?? '',
   }))
 
-  const update = (key: string, val: string) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev)
-      next.set(key, val)
-      return next
-    })
+  const handleMediaChange = (val: string) => {
+    navigate(`/trending/${val}?interval=${interval}`)
+    setPage(1)
+  }
+
+  const handleIntervalChange = (val: string) => {
+    setSearchParams({ interval: val })
     setPage(1)
   }
 
   return (
-    <section className="space-y-6">
+    <section className="mx-auto max-w-7xl space-y-6 px-6 py-8">
       <SectionHeader title="Trending">
         <div className="flex items-center gap-3">
-          <ButtonGroup value={media} options={MEDIA} onClick={(v) => update('media', v)} />
-          <ButtonGroup value={interval} options={INTERVALS} onClick={(v) => update('interval', v)} />
+          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-zinc-500">
+            {mediaType === 'movie' ? <FiFilm size={13} /> : <FiTv size={13} />}
+          </div>
+          <ButtonGroup value={mediaType} options={MEDIA_TYPES} onClick={handleMediaChange} />
+          <ButtonGroup value={interval} options={INTERVALS} onClick={handleIntervalChange} />
         </div>
       </SectionHeader>
-
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <ImageGrid results={gridData} onClick={(id) => navigate(media === 'tv' ? `/tv/${id}` : `/movie/${id}`)} />
+        <div className="space-y-6">
+          <ImageGrid
+            results={gridData}
+            onClick={(id) => {
+              if (mediaType === 'tv') {
+                navigate(`/tv/${id}`)
+              } else {
+                navigate(`/movie/${id}`)
+              }
+            }}
+          />
           <Pagination page={page} maxPages={data?.total_pages ?? 1} onClick={setPage} />
-        </>
+        </div>
       )}
     </section>
   )

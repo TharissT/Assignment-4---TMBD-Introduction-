@@ -21,15 +21,6 @@ export type MovieRepsonse = {
   first_air_date?: string
   vote_average: number
   number_of_seasons?: number
-  videos?: {
-    results: Array<{
-      id: string
-      key: string
-      name: string
-      site: string
-      type: string
-    }>
-  }
 }
 
 export type CreditsResponse = {
@@ -73,10 +64,6 @@ export type TrailersResponse = {
     site: string
     type: string
   }>
-}
-
-export type GenreListResponse = {
-  genres: Array<{ id: number; name: string }>
 }
 
 export type SeasonsResponse = {
@@ -134,4 +121,17 @@ export type PersonImagesResponse = {
     width: number
     height: number
   }>
+}
+
+export type TrendingResponse = {
+  results: Array<{
+    id: number
+    title?: string
+    name?: string
+    original_title?: string
+    poster_path: string | null
+    media_type: string
+    vote_average?: number
+  }>
+  total_pages: number
 }
