@@ -1,8 +1,8 @@
-import { Link } from '@/components/Link'
+import { Link } from '@/components/Link';
 
 type LinkGroupProps = {
-  links: Array<{ label: string; to: string }>
-}
+  links: Array<{ label: string; to: string }>;
+};
 
 export const LinkGroup = ({ links }: LinkGroupProps) => {
   return (
@@ -13,5 +13,5 @@ export const LinkGroup = ({ links }: LinkGroupProps) => {
         </Link>
       ))}
     </div>
-  )
-}
+  );
+};

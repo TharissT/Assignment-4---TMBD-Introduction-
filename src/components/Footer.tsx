@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin } from 'react-icons/fa'
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export const Footer = () => {
   return (
@@ -26,10 +26,8 @@ export const Footer = () => {
             LinkedIn
           </a>
         </div>
-        <p className="text-xs uppercase tracking-widest text-zinc-800">
-          {`© ${new Date().getFullYear()} · Built with React & Vite`}
-        </p>
+        <p className="text-xs uppercase tracking-widest text-zinc-800">{`© ${new Date().getFullYear()} · Built with React & Vite`}</p>
       </div>
     </footer>
-  )
-}
+  );
+};

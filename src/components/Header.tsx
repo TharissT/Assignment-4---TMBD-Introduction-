@@ -1,28 +1,28 @@
-import { Link } from '@/components/Link'
-import { useDebounce } from '@/hooks'
-import { useEffect, useState } from 'react'
-import { FiFilm, FiSearch, FiTrendingUp, FiTv, FiUser } from 'react-icons/fi'
-import { MdOutlineCategory } from 'react-icons/md'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link } from '@/components/Link';
+import { useDebounce } from '@/hooks';
+import { useEffect, useState } from 'react';
+import { FiFilm, FiSearch, FiTrendingUp, FiTv, FiUser } from 'react-icons/fi';
+import { MdOutlineCategory } from 'react-icons/md';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const FILTERS = [
   { label: 'Movies', value: 'movie' },
   { label: 'TV', value: 'tv' },
   { label: 'Person', value: 'person' },
-]
+];
 
 export const Header = () => {
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get('q') || '')
-  const [filter, setFilter] = useState('movie')
-  const debouncedQuery = useDebounce(query, 400)
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get('q') || '');
+  const [filter, setFilter] = useState('movie');
+  const debouncedQuery = useDebounce(query, 400);
 
   useEffect(() => {
     if (debouncedQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(debouncedQuery.trim())}&filter=${filter}`)
+      navigate(`/search?q=${encodeURIComponent(debouncedQuery.trim())}&filter=${filter}`);
     }
-  }, [debouncedQuery, filter])
+  }, [debouncedQuery, filter, navigate]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-sm">
@@ -63,7 +63,7 @@ export const Header = () => {
             type="search"
             value={query}
             onChange={(e) => {
-              setQuery(e.target.value)
+              setQuery(e.target.value);
             }}
             placeholder="Search..."
             className="w-48 rounded-xl border border-zinc-700 bg-zinc-800/80 py-2 pl-9 pr-4 text-sm text-white placeholder-zinc-500 transition-all duration-200 focus:w-64 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600/50"
@@ -74,7 +74,7 @@ export const Header = () => {
             <button
               key={f.value}
               onClick={() => {
-                setFilter(f.value)
+                setFilter(f.value);
               }}
               className={`flex cursor-pointer items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                 filter === f.value
@@ -91,5 +91,5 @@ export const Header = () => {
         </div>
       </nav>
     </header>
-  )
-}
+  );
+};

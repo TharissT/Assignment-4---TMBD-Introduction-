@@ -1,4 +1,4 @@
-import { MainLayout } from '@/layouts/MainLayout'
+import { MainLayout } from '@/layouts/MainLayout';
 import {
   CareerView,
   CreditsView,
@@ -20,8 +20,8 @@ import {
   TvReviewsView,
   TvTrailersView,
   TvView,
-} from '@/views'
-import { Navigate, Route, Routes } from 'react-router-dom'
+} from '@/views';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const App = () => {
   return (
@@ -50,11 +50,11 @@ export const App = () => {
         </Route>
         <Route path="/trending" element={<Navigate to="/trending/movie?interval=day" replace />} />
         <Route path="/trending/:mediaType" element={<TrendingView />} />
-        <Route path="/genre" element={<Navigate to="/genre/movie/28" replace />} />
+        <Route path="/genre" element={<Navigate to="/genre/movie/action" replace />} />
         <Route path="/genre/:mediaType/:genre" element={<GenreView />} />
         <Route path="/search" element={<SearchView />} />
       </Route>
       <Route path="*" element={<ErrorView />} />
     </Routes>
-  )
-}
+  );
+};
